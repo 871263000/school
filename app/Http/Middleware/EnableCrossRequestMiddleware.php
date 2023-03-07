@@ -16,11 +16,23 @@ class EnableCrossRequestMiddleware
      */
     public function handle($request, Closure $next)
     {
-        header('Content-Type: text/html;charset=utf-8');
-        header('Access-Control-Allow-Origin:"http://127.0.0.1:5173"');
-        header('Access-Control-Allow-Methods:POST,GET,PUT,OPTIONS,DELETE'); // 允许请求的类型
-        header('Access-Control-Allow-Credentials: true'); // 设置是否允许发送 cookies
-        header('Access-Control-Allow-Headers: Content-Type,Access-Control-Allow-Origin,Access-token,Content-Length,Accept-Encoding,X-Requested-with, Origin,Access-Control-Allow-Methods'); // 设置允许自定义请求头的字段
-        return $next($request);
+        $response = $next($request);
+
+        $allow_origin = [
+
+            'http://127.0.0.1:5173',
+            
+            ];
+            $response->header('Access-Control-Allow-Origin', $origin);
+
+            $response->header('Access-Control-Allow-Headers', 'Origin, Content-Type, Cookie, X-CSRF-TOKEN, Accept, Authorization, X-XSRF-TOKEN');
+            
+            $response->header('Access-Control-Expose-Headers', 'Authorization, authenticated');
+            
+            $response->header('Access-Control-Allow-Methods', 'GET, POST, PATCH, PUT, OPTIONS');
+            
+            $response->header('Access-Control-Allow-Credentials', 'true');
+
+            return $response;
     }
 }
