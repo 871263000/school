@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\HTTP\Controller\SchoolController;
+use App\Http\Controller\SchoolController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
