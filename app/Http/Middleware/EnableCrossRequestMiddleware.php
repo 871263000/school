@@ -23,7 +23,7 @@ class EnableCrossRequestMiddleware
             'http://127.0.0.1:5173',
             
             ];
-            $response->header('Access-Control-Allow-Origin', $origin);
+            $response->header('Access-Control-Allow-Origin', $allow_origin);
 
             $response->header('Access-Control-Allow-Headers', 'Origin, Content-Type, Cookie, X-CSRF-TOKEN, Accept, Authorization, X-XSRF-TOKEN');
             
