@@ -15,6 +15,10 @@ use App\Http\Controllers\SchoolController;
 */
 
 Route::post("/add_school", [SchoolController::class, 'index']);
+Route::get("/schoolList", [SchoolController::class, 'schoolList']);
+Route::post("/addZyInfo", [SchoolController::class, 'addZyInfo']);
+Route::get("/catZyInfo", [SchoolController::class, 'catZyInfo']);
+
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
