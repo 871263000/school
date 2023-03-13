@@ -18,6 +18,9 @@ Route::post("/add_school", [SchoolController::class, 'index']);
 Route::get("/schoolList", [SchoolController::class, 'schoolList']);
 Route::post("/addZyInfo", [SchoolController::class, 'addZyInfo']);
 Route::get("/catZyInfo", [SchoolController::class, 'catZyInfo']);
+Route::post("/deleteSchool", [SchoolController::class, 'deleteSchool']);
+Route::post("/deleteZyList", [SchoolController::class, 'deleteZyList']);
+Route::post("/updateZyInfo", [SchoolController::class, 'updateZyInfo']);
 
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();

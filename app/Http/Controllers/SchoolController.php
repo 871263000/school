@@ -63,4 +63,36 @@ class SchoolController extends Controller
         $scfi = sc_school_zy_base::select("*")->leftJoin("sc_school_fs_info", "sc_school_zy_base.id", "sc_school_fs_info.pid")->where("sc_school_zy_base.pid", $id)->get();
         return $scfi->toArray();
     }
+    public function deleteSchool (Request $request) 
+    {
+        $id = $request->input("id");
+        sc_school_base::where("id", $id)->delete();
+        $sczb = sc_school_zy_base::select("id")->where("pid", $id)->get();
+        foreach($sczb as $key => $value) {
+            $pid = $value->id;
+            sc_school_fs_info::where("pid", $pid)->delete();
+        }
+        sc_school_zy_base::where("pid", $id)->delete();
+        return ["code"=> 0 , "msg"=> "success"];
+    }
+    public function deleteZyList(Request $request)
+    {
+        $id = $request->input("id");
+        sc_school_zy_base::where("id", $id)->delete();
+        sc_school_fs_info::where("pid", $id)->delete();
+        return ["code"=> 0 , "msg"=> "success"];
+    }
+    public function updateZyInfo(Request $request)
+    {
+        $id = $request->input("id");
+        $nf = $request->input("years");
+        $fs = $request->input("fraction");
+        $wc = $request->input("precedence");
+        sc_school_fs_info::where("id", $id)->update([
+            "years" => $nf,
+            "fraction" => $fs,
+            "precedence" => $wc
+        ]);
+
+    }
 }
