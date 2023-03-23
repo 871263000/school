@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\sc_school_base;
 use App\Models\sc_school_fs_info;
 use App\Models\sc_school_zy_base;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\fractionPreImport;
+
 
 class SchoolController extends Controller
 {
@@ -94,5 +97,14 @@ class SchoolController extends Controller
             "precedence" => $wc
         ]);
 
+    }
+    public function excelSchoolImport(Request $request)
+    {
+        # code...
+    }
+    public function excelFwImport(Request $request)
+    {
+         Excel::import(new fractionPreImport,request()->file("file"));
+         return [];
     }
 }
