@@ -104,7 +104,7 @@ class SchoolController extends Controller
     }
     public function excelFwImport(Request $request)
     {
-         Excel::import(new fractionPreImport,request()->file("file"));
+        Excel::import(new fractionPreImport,request()->file("file"));
          return [];
     }
 }
