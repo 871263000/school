@@ -23,6 +23,8 @@ Route::post("/deleteZyList", [SchoolController::class, 'deleteZyList']);
 Route::post("/updateZyInfo", [SchoolController::class, 'updateZyInfo']);
 Route::post("/excelSchoolImport", [SchoolController::class, 'excelSchoolImport']);
 Route::post("/excelFwImport", [SchoolController::class, 'excelFwImport']);
+Route::post("/excelSchoolImport", [SchoolController::class, 'excelSchoolImport']);
+Route::get("/getScreen", [SchoolController::class, 'getScreen']);
 
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();

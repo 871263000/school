@@ -24,14 +24,17 @@ class fractionPreImport implements ToArray
     public function array(array $array)
     {
         // echo count($array);
-        $nf = $array[0];
+        $t = $array[0][0];
+        $nf = $array[1];
         unset($array[0]);
         unset($array[1]);
+        unset($array[2]);
         foreach($array as $key => $value) {
             // echo json_encode($value);
                 foreach ($nf as $k => $val) {
                    if ($val && $value[$k]) {
                     sc_school_fw_base::create([
+                        "k_type" => $t,
                         "years"=>$val,
                         "number" => $value[$k],  
                         "seating" => $value[$k+1],  
