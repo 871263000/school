@@ -19,6 +19,6 @@ Route::get('/', function () {
 Route::get('/screen', function () {
     return view('welcome');
 });
-// Route::get('/schoolList', function () {
-//     return view('welcome');
-// });
+Route::get('/schoolList', function () {
+    return view('welcome');
+});
