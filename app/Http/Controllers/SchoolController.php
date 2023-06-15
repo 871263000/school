@@ -37,45 +37,44 @@ class SchoolController extends Controller
     }
     public function schoolList(Request $request)
     {
-        $scbs = sc_school_base::select()->paginate(20);
+        $years = $request->input("years");
+        $k_type = $request->input("k_type");
+        $schoolName = $request->input("schoolName");
+        if ($schoolName) {
+            $scbs = sc_school_base::select()->where("years", $years)->where("k_type", $k_type)->where("name", "like", "%". $schoolName ."%")->paginate(20);
+        } else {
+            $scbs = sc_school_base::select()->where("years", $years)->where("k_type", $k_type)->paginate(20);
+        }
         return $scbs;
     }
     public function addZyInfo(Request $request)
     {
-        $klx = $request->input("klx");
+        $k_type = $request->input("k_type");
         $zymc = $request->input("zymc");
         $id = $request->input("id");
-        $zi = $request->input("zi");
+        $fs = $request->input("fs");
+        $wc = $request->input("wc");
+        $years = $request->input("years");
+
         $scfi =  sc_school_zy_base::create([
             "pid"=> $id,
-            "k_type" => $klx,
-            "specialized" => $zymc
+            "k_type" => $k_type,
+            "specialized" => $zymc,
+            "years" => $years,
+            "fraction" => $fs,
+            "precedence" => $wc,
         ]);
-        foreach ($zi as $key => $value) {
-            sc_school_fs_info::create([
-                "pid" => $scfi->id,
-                "years" => $value["nf"],
-                "fraction" => $value["fs"],
-                "precedence" => $value["wc"],
-            ]);
-        }
 
     }
     public function catZyInfo(Request $request)
     {
         $id = $request->input("id");
-        $scfi = sc_school_zy_base::select("*")->leftJoin("sc_school_fs_info", "sc_school_zy_base.id", "sc_school_fs_info.pid")->where("sc_school_zy_base.pid", $id)->get();
+        $scfi = sc_school_zy_base::select("*")->where("pid", $id)->get();
         return $scfi->toArray();
     }
     public function deleteSchool(Request $request)
     {
         $id = $request->input("id");
-        sc_school_base::where("id", $id)->delete();
-        $sczb = sc_school_zy_base::select("id")->where("pid", $id)->get();
-        foreach($sczb as $key => $value) {
-            $pid = $value->id;
-            sc_school_fs_info::where("pid", $pid)->delete();
-        }
         sc_school_zy_base::where("pid", $id)->delete();
         return ["code"=> 0 , "msg"=> "success"];
     }
@@ -89,11 +88,11 @@ class SchoolController extends Controller
     public function updateZyInfo(Request $request)
     {
         $id = $request->input("id");
-        $nf = $request->input("years");
+        $specialized = $request->input("specialized");
         $fs = $request->input("fraction");
         $wc = $request->input("precedence");
         sc_school_fs_info::where("id", $id)->update([
-            "years" => $nf,
+            "years" => $specialized,
             "fraction" => $fs,
             "precedence" => $wc
         ]);
